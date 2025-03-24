@@ -6,6 +6,7 @@ import { python } from '@codemirror/lang-python';
 import { java } from '@codemirror/lang-java';
 import { cpp } from '@codemirror/lang-cpp';
 import { EditorView } from '@codemirror/view';
+import { lineNumbers } from '@codemirror/view';
 
 interface CodeBlockProps {
   code: string;
@@ -51,6 +52,20 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
     }
   };
 
+  // Create an array of extensions including conditional line numbers
+  const getExtensions = () => {
+    const extensions = [
+      getLanguageExtension(),
+      EditorView.lineWrapping,
+    ];
+    
+    if (showLineNumbers) {
+      extensions.push(lineNumbers());
+    }
+    
+    return extensions;
+  };
+
   return (
     <div className="code-window">
       <div className="flex items-center px-4 py-2 bg-editor-gutter border-b border-border/10">
@@ -70,11 +85,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
           value={code}
           height="300px"
           onChange={handleCodeChange}
-          extensions={[
-            getLanguageExtension(),
-            EditorView.lineWrapping,
-            showLineNumbers ? EditorView.lineNumbers() : [],
-          ]}
+          extensions={getExtensions()}
           theme="dark"
           basicSetup={{
             lineNumbers: showLineNumbers,
