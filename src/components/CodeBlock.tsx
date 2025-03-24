@@ -1,6 +1,11 @@
 
 import React, { useEffect, useState } from 'react';
-import { Textarea } from '@/components/ui/textarea';
+import CodeMirror from '@uiw/react-codemirror';
+import { javascript } from '@codemirror/lang-javascript';
+import { python } from '@codemirror/lang-python';
+import { java } from '@codemirror/lang-java';
+import { cpp } from '@codemirror/lang-cpp';
+import { EditorView } from '@codemirror/view';
 
 interface CodeBlockProps {
   code: string;
@@ -23,9 +28,27 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
     setCode(initialCode);
   }, [initialCode]);
 
-  const handleCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCode(e.target.value);
-    onChange?.(e.target.value);
+  const handleCodeChange = (value: string) => {
+    setCode(value);
+    onChange?.(value);
+  };
+
+  const getLanguageExtension = () => {
+    switch (language.toLowerCase()) {
+      case 'javascript':
+        return javascript();
+      case 'typescript':
+        return javascript({ typescript: true });
+      case 'python':
+        return python();
+      case 'java':
+        return java();
+      case 'cpp':
+      case 'c++':
+        return cpp();
+      default:
+        return javascript({ typescript: true });
+    }
   };
 
   return (
@@ -43,11 +66,28 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
         )}
       </div>
       <div className={`p-0 bg-editor text-editor-foreground overflow-x-auto ${animated ? 'animate-code-typing' : ''}`}>
-        <Textarea
+        <CodeMirror
           value={code}
+          height="300px"
           onChange={handleCodeChange}
-          className="font-mono text-sm w-full h-full min-h-[300px] bg-transparent border-0 resize-none focus-visible:ring-0 focus-visible:ring-offset-0 p-4"
-          spellCheck="false"
+          extensions={[
+            getLanguageExtension(),
+            EditorView.lineWrapping,
+            showLineNumbers ? EditorView.lineNumbers() : [],
+          ]}
+          theme="dark"
+          basicSetup={{
+            lineNumbers: showLineNumbers,
+            foldGutter: true,
+            autocompletion: true,
+            bracketMatching: true,
+            closeBrackets: true,
+            highlightActiveLine: true,
+            highlightSelectionMatches: true,
+            indentOnInput: true,
+            syntaxHighlighting: true,
+          }}
+          className="h-full"
         />
       </div>
     </div>

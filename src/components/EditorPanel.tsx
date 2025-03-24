@@ -4,7 +4,8 @@ import { Play, Download, Copy, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CodeBlock from './CodeBlock';
 
-const sampleCode = `function twoSum(nums: number[], target: number): number[] {
+const sampleCodeMap = {
+  typescript: `function twoSum(nums: number[], target: number): number[] {
   const map = new Map<number, number>();
   
   for (let i = 0; i < nums.length; i++) {
@@ -18,11 +19,83 @@ const sampleCode = `function twoSum(nums: number[], target: number): number[] {
   }
   
   return [-1, -1]; // No solution found
-}`;
+}`,
+  
+  python: `def two_sum(nums, target):
+    hash_map = {}
+    
+    for i, num in enumerate(nums):
+        complement = target - num
+        
+        if complement in hash_map:
+            return [hash_map[complement], i]
+            
+        hash_map[num] = i
+        
+    return [-1, -1]  # No solution found`,
+  
+  java: `class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            
+            if (map.containsKey(complement)) {
+                return new int[] {map.get(complement), i};
+            }
+            
+            map.put(nums[i], i);
+        }
+        
+        return new int[] {-1, -1}; // No solution found
+    }
+}`,
+  
+  cpp: `vector<int> twoSum(vector<int>& nums, int target) {
+    unordered_map<int, int> hash_map;
+    
+    for (int i = 0; i < nums.size(); i++) {
+        int complement = target - nums[i];
+        
+        if (hash_map.find(complement) != hash_map.end()) {
+            return {hash_map[complement], i};
+        }
+        
+        hash_map[nums[i]] = i;
+    }
+    
+    return {-1, -1}; // No solution found
+}`,
+  
+  javascript: `function twoSum(nums, target) {
+    const map = new Map();
+    
+    for (let i = 0; i < nums.length; i++) {
+        const complement = target - nums[i];
+        
+        if (map.has(complement)) {
+            return [map.get(complement), i];
+        }
+        
+        map.set(nums[i], i);
+    }
+    
+    return [-1, -1]; // No solution found
+}`
+};
+
+const languageOutputMap = {
+  typescript: "✅ Test cases passed: 5/5\n\nFunction successfully returns [0, 1] for input nums = [2, 7, 11, 15], target = 9\n\nExecution time: 3ms\nMemory used: 40.2 MB",
+  python: "✅ Test cases passed: 5/5\n\nFunction successfully returns [0, 1] for input nums = [2, 7, 11, 15], target = 9\n\nExecution time: 12ms\nMemory used: 14.1 MB",
+  java: "✅ Test cases passed: 5/5\n\nFunction successfully returns [0, 1] for input nums = [2, 7, 11, 15], target = 9\n\nExecution time: 2ms\nMemory used: 39.5 MB",
+  cpp: "✅ Test cases passed: 5/5\n\nFunction successfully returns [0, 1] for input nums = [2, 7, 11, 15], target = 9\n\nExecution time: 0ms\nMemory used: 10.8 MB",
+  javascript: "✅ Test cases passed: 5/5\n\nFunction successfully returns [0, 1] for input nums = [2, 7, 11, 15], target = 9\n\nExecution time: 4ms\nMemory used: 38.7 MB"
+};
 
 const EditorPanel: React.FC = () => {
-  const [code, setCode] = useState(sampleCode);
   const [language, setLanguage] = useState('typescript');
+  const [code, setCode] = useState(sampleCodeMap[language as keyof typeof sampleCodeMap]);
   const [copied, setCopied] = useState(false);
   const [output, setOutput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -31,13 +104,19 @@ const EditorPanel: React.FC = () => {
     setCode(newCode);
   };
 
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newLanguage = e.target.value;
+    setLanguage(newLanguage);
+    setCode(sampleCodeMap[newLanguage as keyof typeof sampleCodeMap] || sampleCodeMap.typescript);
+  };
+
   const handleRunCode = () => {
     setIsLoading(true);
     setOutput('');
     
     // Simulate code execution with a delay
     setTimeout(() => {
-      setOutput('✅ Test cases passed: 5/5\n\nFunction successfully returns [0, 1] for input nums = [2, 7, 11, 15], target = 9\n\nExecution time: 3ms\nMemory used: 40.2 MB');
+      setOutput(languageOutputMap[language as keyof typeof languageOutputMap] || languageOutputMap.typescript);
       setIsLoading(false);
     }, 1500);
   };
@@ -56,7 +135,7 @@ const EditorPanel: React.FC = () => {
           <div className="ml-4">
             <select 
               value={language} 
-              onChange={(e) => setLanguage(e.target.value)}
+              onChange={handleLanguageChange}
               className="text-sm bg-transparent border border-border rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-primary"
             >
               <option value="typescript">TypeScript</option>
