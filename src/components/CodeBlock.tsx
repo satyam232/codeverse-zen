@@ -1,20 +1,32 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Textarea } from '@/components/ui/textarea';
 
 interface CodeBlockProps {
   code: string;
   language?: string;
   animated?: boolean;
   showLineNumbers?: boolean;
+  onChange?: (code: string) => void;
 }
 
 const CodeBlock: React.FC<CodeBlockProps> = ({
-  code,
+  code: initialCode,
   language = 'typescript',
   animated = false,
   showLineNumbers = true,
+  onChange,
 }) => {
-  const lines = code.trim().split('\n');
+  const [code, setCode] = useState(initialCode);
+
+  useEffect(() => {
+    setCode(initialCode);
+  }, [initialCode]);
+
+  const handleCodeChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCode(e.target.value);
+    onChange?.(e.target.value);
+  };
 
   return (
     <div className="code-window">
@@ -31,14 +43,12 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
         )}
       </div>
       <div className={`p-0 bg-editor text-editor-foreground overflow-x-auto ${animated ? 'animate-code-typing' : ''}`}>
-        <pre className="code-content">
-          {lines.map((line, index) => (
-            <div key={index} className="code-line">
-              {showLineNumbers && <span className="code-line-number">{index + 1}</span>}
-              <span className="code-line-content">{line}</span>
-            </div>
-          ))}
-        </pre>
+        <Textarea
+          value={code}
+          onChange={handleCodeChange}
+          className="font-mono text-sm w-full h-full min-h-[300px] bg-transparent border-0 resize-none focus-visible:ring-0 focus-visible:ring-offset-0 p-4"
+          spellCheck="false"
+        />
       </div>
     </div>
   );

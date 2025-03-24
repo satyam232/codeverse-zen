@@ -27,6 +27,10 @@ const EditorPanel: React.FC = () => {
   const [output, setOutput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const handleCodeChange = (newCode: string) => {
+    setCode(newCode);
+  };
+
   const handleRunCode = () => {
     setIsLoading(true);
     setOutput('');
@@ -74,7 +78,12 @@ const EditorPanel: React.FC = () => {
       </div>
       
       <div className="flex-1 overflow-auto">
-        <CodeBlock code={code} language={language} animated={false} />
+        <CodeBlock 
+          code={code} 
+          language={language} 
+          animated={false} 
+          onChange={handleCodeChange}
+        />
       </div>
       
       <div className="border-t border-border/50 p-3 flex items-center justify-between bg-secondary/50">
