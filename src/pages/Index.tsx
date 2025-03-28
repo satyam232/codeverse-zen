@@ -62,10 +62,20 @@ const Index = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
-      
       <main>
         <HeroSection />
+
+        {/* Code Now Button */}
+        <div className="text-center py-12">
+          <Link to="/code-editor" className="inline-flex items-center gap-2 px-6 py-3 text-lg font-semibold bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+            <Code className="h-5 w-5" />
+            Code Now
+          </Link>
+          <Link to="/local-editor" className="inline-flex items-center gap-2 px-6 py-3 ml-4 text-lg font-semibold bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/90 transition-colors">
+            <Code className="h-5 w-5" />
+            Local Editor
+          </Link>
+        </div>
         
         {/* Features Section */}
         <section className="py-24 bg-secondary/30">
@@ -172,7 +182,7 @@ const Index = () => {
             <div className="max-w-3xl mx-auto animate-on-scroll">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Level Up Your Coding Skills?</h2>
               <p className="text-xl text-muted-foreground mb-8">
-                Join thousands of developers who are using CodeVerse to improve their coding skills, 
+                Join thousands of developers who are using CodeWays to improve their coding skills, 
                 prepare for interviews, and connect with a global community.
               </p>
               <div className="flex flex-wrap justify-center gap-4">

@@ -60,14 +60,14 @@ const Dashboard = () => {
   const competitions = [
     { title: 'Weekly Contest 347', time: 'Starts in 2 days' },
     { title: 'Biweekly Contest 112', time: 'Starts in 4 days' },
-    { title: 'CodeVerse Championship', time: 'Registration open' },
+    { title: 'CodeWays Championship', time: 'Registration open' },
   ];
 
   return (
     <div className="min-h-screen bg-background flex">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
       
-      <div className="flex-1 lg:ml-64">
+      <div className="flex-1 lg:ml-64 pt-32">
         <div className="p-6">
           {/* Header */}
           <div className="flex justify-between items-center mb-8">

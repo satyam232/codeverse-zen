@@ -42,7 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           <div className="p-4 flex items-center justify-between border-b border-sidebar-border">
             <Link to="/" className="flex items-center gap-2">
               <Code className="h-6 w-6 text-primary" />
-              <span className="font-bold text-lg">CodeVerse</span>
+              <span className="font-bold text-lg">CodeWays</span>
             </Link>
             {isMobile && (
               <Button variant="ghost" size="icon" onClick={toggleSidebar} className="lg:hidden">

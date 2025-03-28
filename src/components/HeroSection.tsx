@@ -4,17 +4,26 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import CodeBlock from './CodeBlock';
 
-const sampleCode = `function fibonacci(n: number): number {
-  if (n <= 1) {
-    return n;
+const sampleCode = `function debugLife(errors: string[]): void {
+  if (errors.length === 0) {
+    console.log("🚀 No errors found. Keep building, keep innovating!");
+    return;
   }
-  
-  return fibonacci(n - 1) + fibonacci(n - 2);
+
+  errors.forEach((error, index) => {
+    console.log("Fixing issue #  \${index + 1}\: \${error}");
+  });
+
+  console.log("🔁 Refactoring mindset... Recompiling dreams... ✅");
+  console.log("Success is just an optimized algorithm away! Keep coding. 💻🔥");
 }
 
-// Calculate the 10th Fibonacci number
-const result = fibonacci(10);
-console.log(\`The 10th Fibonacci number is: \${result}\`);`;
+// Simulating life's challenges
+const challenges = ["Imposter Syndrome", "Buggy Logic", "Lack of Motivation"];
+
+debugLife(challenges);
+
+`;
 
 const HeroSection = () => {
   useEffect(() => {
@@ -40,10 +49,24 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative pt-24 md:pt-32 pb-20 overflow-hidden">
+    <section className="relative pt-32 md:pt-40 pb-20 overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 -z-10 bg-dot-pattern bg-[length:20px_20px] opacity-5"></div>
       <div className="absolute inset-0 -z-10 bg-gradient-radial from-background to-transparent opacity-40"></div>
+      
+      {/* Animated floating circles */}
+      <div className="absolute inset-0 -z-5 overflow-hidden">
+        {/* Existing floating circles */}
+        <div className="animate-float-slow absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-primary/10 blur-xl"></div>
+        <div className="animate-float-medium absolute top-1/2 left-1/3 w-24 h-24 rounded-full bg-primary/15 blur-lg"></div>
+        <div className="animate-float-fast absolute bottom-1/4 right-1/4 w-16 h-16 rounded-full bg-primary/20 blur-md"></div>
+        
+        {/* New horizontal moving circles */}
+        <div className="animate-move-right-slow animate-float-slow absolute top-1/5 left-0 w-40 h-40 rounded-full bg-primary/5 blur-2xl"></div>
+        <div className="animate-move-right-medium animate-float-medium absolute top-1/3 left-0 w-24 h-24 rounded-full bg-primary/15 blur-lg"></div>
+        <div className="animate-move-right-fast animate-float-fast absolute bottom-1/4 left-0 w-60 h-60 rounded-full bg-primary/10 blur-xl"></div>
+        <div className="animate-move-right-slow animate-float-slow absolute bottom-1/3 left-0 w-32 h-32 rounded-full bg-primary/20 blur-md"></div>
+      </div>
       
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

@@ -110,15 +110,27 @@ const EditorPanel: React.FC = () => {
     setCode(sampleCodeMap[newLanguage as keyof typeof sampleCodeMap] || sampleCodeMap.typescript);
   };
 
-  const handleRunCode = () => {
+  const handleRunCode = async () => {
     setIsLoading(true);
     setOutput('');
-    
-    // Simulate code execution with a delay
-    setTimeout(() => {
-      setOutput(languageOutputMap[language as keyof typeof languageOutputMap] || languageOutputMap.typescript);
+
+    try {
+      const response = await fetch('/api/terminal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          code: code,
+          language: language
+        })
+      });
+
+      const result = await response.text();
+      setOutput(result);
+    } catch (error) {
+      setOutput(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   const handleCopyCode = () => {
@@ -162,6 +174,7 @@ const EditorPanel: React.FC = () => {
           language={language} 
           animated={false} 
           onChange={handleCodeChange}
+          size="large"
         />
       </div>
       

@@ -14,7 +14,7 @@ const Editor = () => {
     <div className="min-h-screen bg-background flex">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
       
-      <div className="flex-1 lg:ml-64 flex flex-col h-screen">
+      <div className="flex-1 lg:ml-64 flex flex-col min-h-screen mt-20">
         <header className="border-b border-border/50 p-4">
           <div className="flex justify-between items-center">
             <div>
@@ -179,3 +179,5 @@ const Editor = () => {
 };
 
 export default Editor;
+
+{/* <main className="pt-20"> */}

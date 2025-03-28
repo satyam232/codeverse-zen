@@ -11,7 +11,7 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Code className="h-6 w-6 text-primary" />
-              <span className="font-bold text-xl">CodeVerse</span>
+              <span className="font-bold text-xl">CodeWays</span>
             </div>
             <p className="text-muted-foreground">
               A modern coding platform designed for developers to practice, learn, and compete.
@@ -85,7 +85,7 @@ const Footer = () => {
             <h4 className="font-medium text-base mb-4">Company</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">
                   About Us
                 </Link>
               </li>
@@ -109,7 +109,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-12 pt-6 border-t border-border/50 flex flex-col md:flex-row items-center justify-between text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} CodeVerse. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} CodeWays. All rights reserved.</p>
           <p className="mt-2 md:mt-0">Designed with precision. Built with passion.</p>
         </div>
       </div>

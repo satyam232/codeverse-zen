@@ -3,6 +3,55 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes blue-glow {
+  0% {
+    box-shadow: 
+      0 0 5px 2px rgba(59, 130, 246, 0.7),
+      0 0 15px 4px rgba(59, 130, 246, 0.5),
+      0 0 25px 8px rgba(59, 130, 246, 0.3);
+  }
+  100% {
+    box-shadow: 
+      0 0 20px 8px rgba(59, 130, 246, 0),
+      0 0 40px 16px rgba(59, 130, 246, 0),
+      0 0 60px 24px rgba(59, 130, 246, 0);
+  }
+}
+
+@keyframes move-left-slow {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(-100px) translateY(50px); }
+  100% { transform: translateX(-200px) translateY(0); }
+}
+
+@keyframes move-right-slow {
+  0% { transform: translateX(0) translateY(0); }
+  50% { transform: translateX(100px) translateY(50px); }
+  100% { transform: translateX(200px) translateY(0); }
+}
+
+.animate-blue-glow {
+  animation: blue-glow 2s ease-in-out infinite alternate;
+  position: relative;
+}
+
+.floating-circle {
+  position: absolute;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+  animation: blue-glow 2s ease-in-out infinite alternate;
+}
+
+.animate-move-left-slow {
+  animation: move-left-slow 15s ease-in-out infinite alternate, blue-glow 2s ease-in-out infinite alternate;
+}
+
+.animate-move-right-slow {
+  animation: move-right-slow 15s ease-in-out infinite alternate, blue-glow 2s ease-in-out infinite alternate;
+}
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
